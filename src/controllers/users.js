@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import User from "../models/User.js";
+import User from "../models/Profile.js";
 
 /* READ */
 export const getManyUsers = async (req, res) => {
@@ -23,11 +23,10 @@ export const getManyUsers = async (req, res) => {
     res.status(501).json({ error: error.message });
   }
 };
+
 export const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
-      .lean()
-      .select({ password: 0, friends: 0, __v: 0, email: 0 });
+    const user = await User.findById(req.params.id).lean();
 
     res.status(user ? 200 : 404).json({ user: user || null });
   } catch (error) {
@@ -40,7 +39,7 @@ export const getUserFriends = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
       .lean()
-      .select("-password -email")
+      .select("-posts")
       .exec();
 
     const friends = await User.find(
@@ -69,8 +68,16 @@ export const addRemoveFriend = async (req, res) => {
     // if (id != req.user._id) {
     //   throw new Error(`id != req.user._id ${id != req.user._id}`);
     // }
-    const user = await User.findById(id).select("-password");
-    const friend = await User.findById(friendId).select("friends");
+    const user = await User.findById(id, {
+      friends: 1,
+      firstName: 1,
+      lastName: 1,
+      picturePath: 1,
+      _id: 1,
+      occupation: 1,
+      location: 1,
+    });
+    const friend = await User.findById(friendId, { friends: 1, _id: 1 });
 
     if (user.friends.includes(friendId)) {
       user.friends = user.friends.filter((friend) => friend !== friendId);

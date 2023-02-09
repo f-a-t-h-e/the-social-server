@@ -5,15 +5,14 @@ import {
   getUserFriends,
   addRemoveFriend,
 } from "../controllers/users.js";
-import { verifyToken } from "../middlewares/auth.js";
 const usersRouter = Router();
 
 usersRouter.route("/").get(getManyUsers);
 
 usersRouter.route("/:id").get(getUser);
 
-usersRouter.route("/:id/friends").get(verifyToken, getUserFriends);
+usersRouter.route("/:id/friends").get(getUserFriends);
 
-usersRouter.patch("/:id/:friendId", verifyToken, addRemoveFriend);
+usersRouter.patch("/:id/:friendId", addRemoveFriend);
 
 export default usersRouter;

@@ -2,18 +2,6 @@ import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      require: [true, "Please provide your first name"],
-      min: 2,
-      max: 60,
-    },
-    lastName: {
-      type: String,
-      require: [true, "Please provide your last name"],
-      min: 2,
-      max: 60,
-    },
     email: {
       type: String,
       required: [true, "Please provide an email"],
@@ -28,19 +16,6 @@ const UserSchema = mongoose.Schema(
       required: [true, "Please provide a password"],
       minlength: 5,
     },
-    picturePath: {
-      type: String,
-      default: "",
-    },
-    // TO_DO : move these to Profile
-    friends: {
-      type: Array,
-      default: [],
-    },
-    location: String,
-    occupation: String,
-    viewedProfile: Number,
-    impressions: Number,
   },
   { timestamps: true }
 );

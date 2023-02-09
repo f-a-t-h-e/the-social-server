@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Profile from "../models/Profile.js";
 
 /* REGISTER USER */
 export const register = async (req, res) => {
@@ -19,10 +20,14 @@ export const register = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      firstName,
-      lastName,
       email,
       password: passwordHash,
+    });
+    const newProfile = new Profile({
+      _id: newUser._id,
+      firstName,
+      lastName,
+      posts: [],
       picturePath,
       friends: [],
       location,
@@ -32,8 +37,9 @@ export const register = async (req, res) => {
       impressions: Math.floor(Math.random() * 10000),
     });
 
-    const savedUser = (await newUser.save()).toObject();
-    res.status(201).json({ user: { ...savedUser, password: undefined } });
+    await newUser.save();
+    const profile = (await newProfile.save()).toObject();
+    res.status(201).json({ profile });
   } catch (error) {
     console.log("🚀 ~ file: auth.js:10 ~ register ~ error", error);
     res.status(500).json({ error: error.message });
