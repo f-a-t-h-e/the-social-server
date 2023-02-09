@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-const PostSchema = new mongoose.Schema(
+const CommentSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
+    post: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
       require: true,
     },
     author: {
@@ -13,21 +14,17 @@ const PostSchema = new mongoose.Schema(
     },
     picturesPaths: {
       type: Array,
-      default: [],
     },
     reacts: {
       type: Map,
       of: String,
     },
-    comments: {
-      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-      default: [],
+    content: {
+      type: String,
     },
-    privacy: String,
-    group: String,
   },
   { timestamps: true }
 );
 
-const Post = mongoose.model("Post", PostSchema);
-export default Post;
+const Comment = mongoose.model("Comment", CommentSchema);
+export default Comment;
