@@ -56,7 +56,9 @@ export const login = async (req, res) => {
         .status(400)
         .json({ error: "Email or password are in correct" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "3d",
+    });
     delete user.password;
     res.status(200).json({ token, user });
   } catch (error) {
