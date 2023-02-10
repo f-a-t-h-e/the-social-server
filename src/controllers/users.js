@@ -20,7 +20,7 @@ export const getManyUsers = async (req, res) => {
     res.status(200).json({ users });
   } catch (error) {
     console.log("🚀 ~ file: users.js:8 ~ getManyUsers ~ error", error);
-    res.status(501).json({ error: error.message });
+    res.status(501).json({ message: error.message });
   }
 };
 
@@ -31,7 +31,7 @@ export const getUser = async (req, res) => {
     res.status(user ? 200 : 404).json({ user: user || null });
   } catch (error) {
     console.log("🚀 ~ file: users.js:5 ~ getUser ~ error", error);
-    res.status(501).json({ error: error.message });
+    res.status(501).json({ message: error.message });
   }
 };
 
@@ -57,7 +57,7 @@ export const getUserFriends = async (req, res) => {
     res.status(200).json({ user: { ...user, friends } });
   } catch (error) {
     console.log("🚀 ~ file: users.js:5 ~ getUser ~ error", error);
-    res.status(501).json({ error: error.message });
+    res.status(501).json({ message: error.message });
   }
 };
 
@@ -103,6 +103,6 @@ export const addRemoveFriend = async (req, res) => {
     res.status(200).json({ user: { ...user.toObject(), friends } });
   } catch (error) {
     console.log("🚀 ~ file: users.js:5 ~ getUser ~ error", error);
-    res.status(501).json({ error: error.message });
+    res.status(501).json({ message: error.message });
   }
 };

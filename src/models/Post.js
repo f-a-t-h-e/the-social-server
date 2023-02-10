@@ -6,15 +6,13 @@ const PostSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    content: String,
     author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Profile",
       require: true,
     },
-    picturesPaths: {
-      type: Array,
-      default: [],
-    },
+    images: [],
     reacts: {
       type: Map,
       of: String,

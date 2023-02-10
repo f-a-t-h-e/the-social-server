@@ -17,6 +17,6 @@ export const verifyToken = async (req, res, next) => {
     next();
   } catch (error) {
     console.log("🚀 ~ file: auth.js:7 ~ verifyToken ~ error", error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };

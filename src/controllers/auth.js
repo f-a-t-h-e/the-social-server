@@ -42,7 +42,7 @@ export const register = async (req, res) => {
     res.status(201).json({ profile });
   } catch (error) {
     console.log("🚀 ~ file: auth.js:10 ~ register ~ error", error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -54,13 +54,13 @@ export const login = async (req, res) => {
       console.log("This email is not found", new Date());
       return res
         .status(400)
-        .json({ error: "Email or password are in correct" });
+        .json({ message: "Email or password are in correct" });
     }
     if (!(await bcrypt.compare(password, user.password))) {
       console.log("This password is not correct", new Date());
       return res
         .status(400)
-        .json({ error: "Email or password are in correct" });
+        .json({ message: "Email or password are in correct" });
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "3d",
@@ -69,6 +69,6 @@ export const login = async (req, res) => {
     res.status(200).json({ token, user });
   } catch (error) {
     console.log("🚀 ~ file: auth.js:47 ~ login ~ error", error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
